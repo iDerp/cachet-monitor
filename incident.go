@@ -23,11 +23,11 @@ type Incident struct {
 func (incident *Incident) Send(cfg *CachetMonitor) error {
 	switch incident.Status {
 		case 1, 2, 3:
-			// partial outage
-			incident.ComponentStatus = 3
+			// performance issue
+			incident.ComponentStatus = 2
 
 			compInfo := cfg.API.GetComponentData(incident.ComponentID)
-			if compInfo.Status == 3 {
+			if compInfo.Status == 2 {
 				// major outage
 				incident.ComponentStatus = 4
 			}

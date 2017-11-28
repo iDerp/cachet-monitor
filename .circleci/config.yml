@@ -83,6 +83,8 @@ jobs:
             else
               echo "Releasing '${LATEST_TAG}'" && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --delete --replace ${LATEST_TAG} ./dist
             fi
+      - store_artifacts:
+          path: ./dist
 
 workflows:
   version: 2

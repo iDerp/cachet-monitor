@@ -35,34 +35,6 @@ func (incident *Incident) Send(cfg *CachetMonitor) error {
 			// fixed
 			incident.ComponentStatus = 1
 	}
-
-	requestType := "POST"
-	requestURL := "/incidents"
-	if incident.ID > 0 {
-		requestType = "PUT"
-		requestURL += "/" + strconv.Itoa(incident.ID)
-	}
-
-	jsonBytes, _ := json.Marshal(incident)
-
-	resp, body, err := cfg.API.NewRequest(requestType, requestURL, jsonBytes)
-	if err != nil {
-		return err
-	}
-
-	var data struct {
-		ID int `json:"id"`
-	}
-	if err := json.Unmarshal(body.Data, &data); err != nil {
-		return fmt.Errorf("Cannot parse incident body: %v, %v", err, string(body.Data))
-	}
-
-	incident.ID = data.ID
-	if resp.StatusCode != 200 {
-		return fmt.Errorf("Could not create/update incident!")
-	}
-
-	return nil
 }
 
 // SetInvestigating sets status to Investigating

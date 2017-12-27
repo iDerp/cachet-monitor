@@ -13,7 +13,7 @@
 ## Example Configuration
 
 **Note:** configuration can be in json or yaml format. [`example.config.json`](https://github.com/CastawayLabs/cachet-monitor/blob/master/example.config.json), [`example.config.yaml`](https://github.com/CastawayLabs/cachet-monitor/blob/master/example.config.yml) files.
-
+.
 ```yaml
 api:
   # cachet url

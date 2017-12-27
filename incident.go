@@ -1,11 +1,5 @@
 package cachet
 
-import (
-	"encoding/json"
-	"fmt"
-	"strconv"
-)
-
 // Incident Cachet data model
 type Incident struct {
 	ID      int    `json:"id"`
@@ -35,6 +29,7 @@ func (incident *Incident) Send(cfg *CachetMonitor) error {
 			// fixed
 			incident.ComponentStatus = 1
 	}
+	return nil
 }
 
 // SetInvestigating sets status to Investigating

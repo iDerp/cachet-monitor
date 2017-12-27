@@ -37,6 +37,9 @@ jobs:
           key: cachet-monitory-delivery-cache-{{ checksum "cachet_monitor" }}
           paths:
             - /go/src/cachet/cli
+      - store_artifacts:
+          path: /go/src/cachet/cli/cachet_monitor
+          destination: artifact-file
 
   test:
     working_directory: /go/src/cachet/cli
@@ -73,16 +76,9 @@ jobs:
       - run:
           name: Preparing release...
           command: mkdir ./dist && mv ./cachet_monitor ./dist && cat cachet-monitory.tag
-      - run:
-          name: GitHub Release...
-          command: |
-            LATEST_TAG=`cat cachet-monitory.tag`
-            if [[ "`echo ${LATEST_TAG} | tr '[:upper:]' '[:lower:]'`" == *"snapshot"* ]]; then
-              echo "Prereleasing '${LATEST_TAG}'" && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --delete --prerelease --replace ${LATEST_TAG} ./dist
-              echo "Prereleasing '${LATEST_TAG}'" && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --delete --prerelease --replace snapshot ./dist
-            else
-              echo "Releasing '${LATEST_TAG}'" && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} --delete --replace ${LATEST_TAG} ./dist
-            fi
+      - store_artifacts:
+          path: /go/src/cachet/cli/cachet_monitor
+          destination: artifact-file
 
 workflows:
   version: 2
